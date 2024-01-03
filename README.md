@@ -1,5 +1,5 @@
 # spring-ai-in-action
 
-In this tutorial, we'll be putting AI to work in some fascinating scenarios using Spring Boot.
+In this project the goal is integrate my database with open ai and use it to generate response.
 
-Spring-AI is extremely fresh and currently lacks a stable version. However, we anticipate the release of a stable version in the future.
+Now the program can give response to question, search for argument and generate images. In the nearly future all that will be done using a personal db.
