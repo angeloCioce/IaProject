@@ -14,6 +14,6 @@ In this project the goal is integrate my database with open ai and use it to gen
       -Give u hint how to do things with the data
       -In future give u graphs, for example a graph of earn/loss money based on all product or a portion o product.
 
-# THINGS I WANT TO DO IN THE FUTURE WHIT THIS PROGRAM
+# things-i-want-to-add-in-future-update
 
 After adjusting the image generatore, i want to create a method that take in a image, text, ecc. and give me out a graph, table, ecc. or for example if we talk about arts or something, capable of generate images from that or recognize the artist behind the image or describe it.
