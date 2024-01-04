@@ -20,14 +20,14 @@ public class SpringAIController {
     @Autowired
     SpringAIService aiService;
 
-    @GetMapping("/joke")
-    public String getJoke(@RequestParam String topic) {
-        return aiService.getJoke(topic);
+    @GetMapping("/request")
+    public String getQuestion(@RequestParam String topic) {
+        return aiService.getRequest(topic);
     }
 
-    @GetMapping("/book")
-    public String getBook(@RequestParam(name = "category") String category, @RequestParam(name = "year") String year) {
-        return aiService.getBestBook(category, year);
+    @GetMapping("/research_media")
+    public String getMedia(@RequestParam(name = "type") String type, @RequestParam(name = "category") String category, @RequestParam(name = "year") String year) {
+        return aiService.getBestMedia(type, category, year);
     }
 
     @GetMapping(value = "/image", produces = "image/jpeg")

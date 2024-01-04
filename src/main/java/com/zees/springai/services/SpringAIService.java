@@ -31,7 +31,7 @@ public class SpringAIService {
     private String openAIImageUrl;
 
 
-    public String getJoke(String topic){
+    public String getRequest(String topic){
         PromptTemplate promptTemplate = new PromptTemplate("""
                 I want to ask you kindly a question. I want all the details about it u can give me. Would you like me to give me a response at this question about {topic}? 
                 Please if u can give me graph, link to pages releated and so on to lear more about it.
@@ -40,15 +40,15 @@ public class SpringAIService {
         return this.aiClient.generate(promptTemplate.create()).getGeneration().getText();
     }
 
-    public String getBestBook(String category, String year) {
+    public String getBestMedia(String type, String category, String year) {
         PromptTemplate promptTemplate = new PromptTemplate("""
-                I want to research some games to play on pc. How about you give me a game about {category} in {year} to get started?
-                But pick the best best you can think of. I'm a game critic, after all. Ratings are a good place to start.
-                And who develop it? And who help it? Can you give me a short summary and also some link of trailer i can watch?
+                I want to research a {type}. How about you give me a {type} about {category} in {year} to get started?
+                But pick the best best you can think of. I'm a critic, after all. Ratings are a good place to start.
+                And who develop it? And who help it? Can you give me a short summary and also some link i can watch?
                 But don't give me too much information. I want to be surprised.
-                And please give me these details in the following JSON format: category, year, gameName, author, review, smallSummary.
+                And please give me these details in the following JSON format: type, category, year, name, author, review, smallSummary.
                 """);
-        Map.of("category", category, "year", year).forEach(promptTemplate::add);
+        Map.of("category", category, "year", year, "type", type).forEach(promptTemplate::add);
         AiResponse generate = this.aiClient.generate(promptTemplate.create());
         return generate.getGeneration().getText();
     }
