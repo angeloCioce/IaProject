@@ -3,8 +3,11 @@ package com.zees.springai.controllers;
 import com.zees.springai.model.Prodotto;
 import com.zees.springai.services.ProdottoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,5 +45,10 @@ public class ProdottoController {
     @GetMapping("/response")
     public String getResponse(String topic, @RequestParam String question) {
         return prodottoService.getAiInformation(topic, question);
+    }
+
+    @GetMapping(value = "/graph")
+    public String getGraph(String topic, @RequestParam(name = "request") String request) {
+        return prodottoService.getGraphicFromData(topic, request);
     }
 }

@@ -11,12 +11,17 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class SpringAIService {
@@ -64,16 +69,30 @@ public class SpringAIService {
         promptTemplate.add("topic", topic);
         String imagePrompt = this.aiClient.generate(promptTemplate.create()).getGeneration().getText();
 
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + apiKey);
-        headers.add("Content-Type", "application/json");
-        HttpEntity<String> httpEntity = new HttpEntity<>(imagePrompt,headers);
+        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("prompt", imagePrompt);
+        requestBody.add("n", "1");
+        requestBody.add("size", "\"256\"");
 
-        String imageUrl = restTemplate.exchange(openAIImageUrl, HttpMethod.POST, httpEntity, GeneratedImage.class)
-                .getBody().getData().get(0).getUrl();
-        byte[] imageBytes = restTemplate.getForObject(new URI(imageUrl), byte[].class);
-        assert imageBytes != null;
+        System.out.println(imagePrompt);
+
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Authorization", "Bearer " + apiKey);
+            headers.add("Content-Type", "application/json");
+            HttpEntity<String> httpEntity = new HttpEntity<>(imagePrompt, headers);
+
+            System.out.println(restTemplate);
+            System.out.println(headers);
+            System.out.println(httpEntity);
+
+
+            String imageUrl = restTemplate.exchange(openAIImageUrl, HttpMethod.POST, httpEntity, GeneratedImage.class)
+                    .getBody().getData().get(0).getUrl();
+
+            System.out.println(imageUrl);
+
+            byte[] imageBytes = restTemplate.getForObject(new URI(imageUrl), byte[].class);
         return new InputStreamResource(new java.io.ByteArrayInputStream(imageBytes));
     }
 
